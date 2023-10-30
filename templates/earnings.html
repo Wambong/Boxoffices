@@ -1,0 +1,181 @@
+{% extends 'base0.html' %}
+{% load static %}
+
+{% block title %}
+<title>BoxOffice | Profile</title>
+{% endblock %}
+
+{% block style %}
+<style>
+    #wrapper {
+        display: flex;
+        margin-top: -62px;
+    }
+
+    .sidebar {
+        width: 19rem !important;
+        background: linear-gradient(0deg, #2196F3, #00106b);
+        padding-top: 80px;
+    }
+
+    #content-wrapper {
+        background-color: #e6e6e6;
+        width: 100%;
+        height: 100vh;
+        padding-top: 60px;
+        overflow-x: hidden;
+    }
+     #form {
+          background: linear-gradient(250deg, #dc354585, #0524ff61), url(../images/bookings.jpg);
+          height: auto;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+    }
+
+    .active {
+        background: white;
+        box-shadow: -1px 1px 13px 2px;
+    }
+
+    .nav-item:hover {
+        background: #e0e0e0;
+        box-shadow: -1px 1px 13px 2px;
+    }
+
+    .active-link,
+    .nav-link:hover {
+        color: #021045;
+        display: block;
+        padding: .5rem 0rem;
+    }
+
+    .nav-item {
+        padding: 0px 20px;
+        border-radius: 10px;
+        margin: 5px 5px;
+    }
+
+    .nav-item a {
+        font-size: 19px;
+        font-weight: 500;
+        text-decoration: none;
+        color: #021045;
+    }
+
+    a.nav-link {
+        color: white;
+    }
+
+    i {
+        padding-right: 5px;
+    }
+
+    .round {
+        padding: 20px;
+        border-radius: 20px;
+        min-height: 250px;
+    }
+
+    .poster {
+        margin: 15px;
+
+    }
+</style>
+<link rel="stylesheet" href="{% static 'styles/bookings.css' %}" >
+{% endblock %}
+
+{% block content %}
+
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav sidebar ">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">
+                <i class="fa fa-tachometer"></i>
+                <span>Dashboard</span></a>
+        </li>
+       <li class="nav-item">
+            <a class="active-link" href="{% url 'add_movie' %}">
+                <i class="fa fa-ticket"></i>
+                <span>Add Movie</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_shows' %}">
+                <i class="fa fa-ticket"></i>
+                <span>Add Shows</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="active-link" href="{% url 'earnings' %}">
+               <i class="fa fa-ruble"></i>
+                <span>Earnings</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">
+                <i class="fa fa-sign-out"></i>
+                <span>Logout</span></a>
+        </li>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div class="row m-3">
+            <div class="col-12 card round" id="form">
+                <h5 class="display-4">Total Sales at {{user.cinema.cinema_name}}</h5>
+                <hr>
+
+                <h6 style="width: auto; box-shadow: -1px 1px 13px 2px;">Your total earnings: {{ total.shows__price__sum }}₽ </h6>
+
+
+                <div class="row p-4">
+                        <table class="table shadow text-center">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" width="5%">ID</th>
+                                        <th scope="col">User</th>
+                                        <th scope="col">Movie</th>
+                                        <th scope="col">Seat</th>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for list in s %}
+                                        <tr>
+                                            <th scope="row">{{list.pk}}</th>
+                                            <th scope="row">{{list.user.first_name}}</th>
+                                            <th scope="row">{{list.shows.movie}}</th>
+                                            <th scope="row">{{list.useat}}</th>
+                                            <th scope="row">{{list.shows.time}}</th>
+                                            <th scope="row">{{list.shows.date}}</th>
+                                            <th scope="row">₽ {{list.shows.price}}</th>
+                                        </tr>
+                                            {% endfor %}
+                                </tbody>
+                            </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+
+
+
+{% endblock %}
+
+
+{% block JQuery %}
+<script>
+</script>
+{% endblock %}
